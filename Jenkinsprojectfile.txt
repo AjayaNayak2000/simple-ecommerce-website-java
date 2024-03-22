@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'fe/dev', description: 'Specify the branch name to deploy')
+        string(name: 'BRANCH_NAME', defaultValue: 'ajaya/dev', description: 'Specify the branch name to deploy')
     }
     stages {
         stage("GIT checkout") {
@@ -13,16 +13,11 @@ pipeline {
                 }
             }
          }
-        stage("Testing") {
-            steps {
-                echo "Test Runs"
-            
-            }
-        }
+     
         stage("Build") {
             steps {
                 sh "mvn clean package"
-                sh "mv target/hello-1.0.war target/simple-ecommerce-website-java.git"
+                sh "mv target/Project1.war target/simple-ecommerce-website-java.git"
             }
         }
         stage("Deploy to Dev") {
@@ -52,7 +47,7 @@ pipeline {
                 deployToTomcat('3.235.88.160', 'tomcat', 'tomcat', 'http://3.235.88.160:8080/manager/text', 'simple-ecommerce-website-java', 'Prod')
                 
                 // Send Slack notification
-                slackSend(channel: '8PM-cloud-devops-batch', message: "Deployment to PROD has been approved by manager.")
+                slackSend(channel: '8pm-devops-batch', message: "Deployment to PROD has been approved by manager.")
             }
         }
     }
