@@ -42,7 +42,7 @@ pipeline {
             steps {
                 input(message: "Do you want to proceed to PROD?", ok: "Proceed") // Approval step
                 // Deploy to PROD server after approval
-                deployToTomcat('3.110.169.249', 'tomcat', 'tomcat', 'http://3.110.169.249:8080/manager/text', '/simple-ecommerce-website-java', 'Prod')
+                deployToTomcat('3.235.88.160', 'tomcat', 'tomcat', 'http://3.235.88.160:8080/manager/text', '/simple-ecommerce-website-java', 'Prod')
                 // Send Slack notification
                 slackSend(channel: '8pm-devops-batch', message: "Deployment to PROD has been approved by manager.")
             }
