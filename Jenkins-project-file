@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 'Dev/Fe', description: 'Specify the branch name to deploy')
+        string(name: 'BRANCH_NAME', defaultValue: 'ajaya/dev', description: 'Specify the branch name to deploy')
     }
     stages {
         stage("GIT checkout") {
@@ -9,7 +9,7 @@ pipeline {
                 script {
                     // Checkout the specified branch
                     def branchName = params.BRANCH_NAME
-                    checkout([$class: 'GitSCM', branches: [[name: branchName]], userRemoteConfigs: [[url: 'https://github.com/YugeshKumar01/simple-ecommerce-website-java.git']]])
+                    checkout([$class: 'GitSCM', branches: [[name: branchName]], userRemoteConfigs: [[url: 'https://github.com/AjayaNayak2000/simple-ecommerce-website-java.git']]])
                 }
             }
         }
@@ -21,18 +21,18 @@ pipeline {
         }
         stage("Deploy to Dev/Fe") {
             when {
-                expression { params.BRANCH_NAME == 'Dev/Fe' }
+                expression { params.BRANCH_NAME == 'ajaya/dev' }
             }
             steps {
                 deployToTomcat('100.26.3.17', 'tomcat', 'tomcat', 'http://100.26.3.17:8080/manager/text', '/simple-ecommerce-website-java', 'Dev')
             }
         }
-        stage("Deploy to Test") {
+        stage("Deploy to   QA") {
             when {
-                expression { params.BRANCH_NAME == 'Test' }
+                expression { params.BRANCH_NAME == 'ajaya/qa' }
             }
             steps {
-                deployToTomcat('43.205.196.188', 'tomcat', 'tomcat', 'http://43.205.196.188:8080/manager/text', '/simple-ecommerce-website-java', 'Test')
+                deployToTomcat('3.239.71.239', 'tomcat', 'tomcat', 'http://3.239.71.239:8080/manager/text', '/simple-ecommerce-website-java', 'Test')
             }
         }
         stage("Deploy to Prod") {
